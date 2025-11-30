@@ -5,7 +5,7 @@ from helpers import preprocess_data, require_raw_data  # fungsi helper untuk cek
 
 def show_preprocessing():
     # Judul utama halaman preprocessing
-    st.title("🧹 Preprocessing Data")
+    st.title("Preprocessing Data")
 
     # Pastikan dataset mentah sudah di-upload, kalau belum akan stop dan beri peringatan
     require_raw_data()
@@ -55,7 +55,7 @@ def show_preprocessing():
     #  TOMBOL JALANKAN PREPROCESSING
     # -----------------------------
     # Tombol untuk memulai proses preprocessing
-    if st.button("🚀 Jalankan Preprocessing", key="run_preprocess"):
+    if st.button(" Jalankan Preprocessing", key="run_preprocess"):
         # Tampilkan spinner selama proses berjalan
         with st.spinner("⏳ Sedang memproses data..."):
             # Panggil fungsi preprocess_data dari helpers
@@ -121,12 +121,58 @@ def show_preprocessing():
         st.dataframe(clean_df.describe(), use_container_width=True)
 
         # -----------------------------
-        #     TOMBOL LANJUT SELALU ADA
+        #     TOMBOL NAVIGASI
         # -----------------------------
-        # Tombol untuk berpindah ke halaman Analisis Data (training model)
-        if st.button("➡️ Lanjut ke Analisis Data", key="goto_training"):
-            st.session_state["page"] = "Analisis Data"  # ubah target halaman di session_state
-            st.rerun()  # reload app agar router di app.py mengarahkan ke halaman analisis
+        # Tombol Previous di ujung kiri dan Next di ujung kanan, sejajar dengan konten
+        col_prev, col_spacer, col_next = st.columns([3, 6, 3], gap="large")
+        
+        with col_prev:
+            
+            # Tombol Previous untuk kembali ke halaman Upload Dataset
+            if st.button("< Previous", key="goto_upload", use_container_width=False):
+                st.session_state["page"] = "Upload Dataset"
+                st.rerun()
+        
+        with col_spacer:
+            # Spacer kosong
+            st.empty()
+        
+        with col_next:
+            # Tombol Next untuk berpindah ke halaman Analisis Data (training model)
+            if st.button("Next >", key="goto_training", use_container_width=False):
+                st.session_state["page"] = "Analisis Data"  # ubah target halaman di session_state
+                st.rerun()  # reload app agar router di app.py mengarahkan ke halaman analisis
+        
+        # Inject JavaScript untuk menambahkan class ke button setelah di-render
+        st.markdown("""
+        <script>
+        function styleNavButtons() {
+            const buttons = document.querySelectorAll('.stButton > button');
+            buttons.forEach(button => {
+                const text = button.textContent.trim();
+                if (text.includes('Previous')) {
+                    button.classList.add('nav-button-prev');
+                    button.style.whiteSpace = 'nowrap';
+                    button.style.textAlign = 'center';
+                } else if (text.includes('Next')) {
+                    button.classList.add('nav-button-next');
+                    button.style.whiteSpace = 'nowrap';
+                    button.style.textAlign = 'center';
+                }
+            });
+        }
+        // Jalankan setelah DOM siap
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', styleNavButtons);
+        } else {
+            styleNavButtons();
+        }
+        // Jalankan lagi setelah Streamlit selesai render
+        setTimeout(styleNavButtons, 100);
+        // Jalankan lagi setelah delay lebih lama untuk memastikan
+        setTimeout(styleNavButtons, 500);
+        </script>
+        """, unsafe_allow_html=True)
 
         # Info bahwa data preprocessing sudah siap dipakai di tahap berikutnya
         st.info("✅ Data preprocessing sudah tersimpan dan siap untuk dianalisis.")

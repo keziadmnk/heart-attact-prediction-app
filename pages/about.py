@@ -4,7 +4,7 @@ import streamlit as st
 
 def show_about():
     # Judul utama halaman "About"
-    st.title("ℹ️ Tentang Aplikasi")
+    st.title("ℹ Tentang Aplikasi")
 
     # Card deskripsi umum aplikasi (dibuat dengan HTML + CSS custom dari style.py)
     st.markdown(
@@ -117,10 +117,7 @@ def show_about():
         """
         <div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #8B0000 0%, #c62828 100%); 
                     border-radius: 12px; color: white;">
-            <h3 style="color: white;">❤️ Terima kasih telah menggunakan aplikasi ini!</h3>
-            <p style="color: white; margin-top: 1rem;">
-                Dikembangkan dengan ❤️ oleh Kelompok 4 - Sistem Informasi UNAND
-            </p>
+            <h3 style="color: white;">Terima kasih telah menggunakan aplikasi ini!</h3>
         </div>
         """,
         unsafe_allow_html=True,

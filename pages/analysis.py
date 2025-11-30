@@ -15,7 +15,7 @@ from helpers import (
 
 def show_analysis():
     # Judul halaman Analisis / Training model
-    st.title("🧠 Training Model & Evaluasi")
+    st.title("Training Model & Evaluasi")
 
     # Pastikan data hasil preprocessing sudah tersedia,
     # kalau belum, fungsi require_clean_data() akan menampilkan warning dan menghentikan eksekusi
@@ -67,7 +67,7 @@ def show_analysis():
     # Tombol Training
     # -----------------------------------------
     # Saat tombol ini diklik, proses training model akan dijalankan
-    if st.button("🚀 Mulai Training Model", key="run_training"):
+    if st.button("Mulai Training Model", key="run_training"):
         # Tampilkan spinner selama proses training berlangsung
         with st.spinner("⏳ Sedang melatih model Random Forest..."):
             # X = fitur, y = label/target
@@ -153,12 +153,57 @@ def show_analysis():
         plot_feature_importance(model, X_cols)
 
         # -----------------------------------------
-        # TOMBOL LANJUT — selalu muncul
+        # TOMBOL NAVIGASI
         # -----------------------------------------
-        # Kalau ditekan, langsung mengubah halaman ke "Data Visualization"
-        if st.button("➡️ Lanjut ke Visualisasi", key="goto_viz"):
-            st.session_state["page"] = "Data Visualization"
-            st.rerun()
+        # Tombol Previous di ujung kiri dan Next di ujung kanan, sejajar dengan konten
+        col_prev, col_spacer, col_next = st.columns([3, 6, 3], gap="large")
+        
+        with col_prev:
+            # Tombol Previous untuk kembali ke halaman Preprocessing
+            if st.button("< Previous", key="goto_preprocessing", use_container_width=False):
+                st.session_state["page"] = "Preprocessing Data"
+                st.rerun()
+        
+        with col_spacer:
+            # Spacer kosong
+            st.empty()
+        
+        with col_next:
+            # Kalau ditekan, langsung mengubah halaman ke "Data Visualization"
+            if st.button("Next >", key="goto_viz", use_container_width=False):
+                st.session_state["page"] = "Data Visualization"
+                st.rerun()
+        
+        # Inject JavaScript untuk menambahkan class ke button setelah di-render
+        st.markdown("""
+        <script>
+        function styleNavButtons() {
+            const buttons = document.querySelectorAll('.stButton > button');
+            buttons.forEach(button => {
+                const text = button.textContent.trim();
+                if (text.includes('Previous')) {
+                    button.classList.add('nav-button-prev');
+                    button.style.whiteSpace = 'nowrap';
+                    button.style.textAlign = 'center';
+                } else if (text.includes('Next')) {
+                    button.classList.add('nav-button-next');
+                    button.style.whiteSpace = 'nowrap';
+                    button.style.textAlign = 'center';
+                }
+            });
+        }
+        // Jalankan setelah DOM siap
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', styleNavButtons);
+        } else {
+            styleNavButtons();
+        }
+        // Jalankan lagi setelah Streamlit selesai render
+        setTimeout(styleNavButtons, 100);
+        // Jalankan lagi setelah delay lebih lama untuk memastikan
+        setTimeout(styleNavButtons, 500);
+        </script>
+        """, unsafe_allow_html=True)
 
         # Info tambahan bahwa model sudah siap dipakai untuk menu Prediction
         st.success("✅ Model sudah tersedia dan siap digunakan untuk prediksi.")

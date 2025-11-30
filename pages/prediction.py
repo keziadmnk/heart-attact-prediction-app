@@ -7,7 +7,7 @@ from helpers import require_model  # fungsi helper untuk memastikan model sudah 
 
 def show_prediction():
     # Judul utama halaman prediksi individu
-    st.title("🩺 Prediksi Risiko Serangan Jantung")
+    st.title("Prediksi Risiko Serangan Jantung")
 
     # Pastikan model sudah dilatih, kalau belum user diarahkan untuk training dulu
     require_model()
@@ -144,7 +144,7 @@ def show_prediction():
 
         # Garis pemisah dan tombol submit form
         st.markdown("---")
-        submitted = st.form_submit_button("🔍 Prediksi Sekarang", use_container_width=True)
+        submitted = st.form_submit_button(" Prediksi Sekarang", use_container_width=True)
 
     # -----------------------------------------
     # LOGIKA PREDIKSI (dijalankan setelah tombol submit)

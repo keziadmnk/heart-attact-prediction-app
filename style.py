@@ -3,147 +3,157 @@ import streamlit as st
 def add_custom_css():
     """
     Menyuntikkan (inject) CSS kustom ke dalam aplikasi Streamlit.
-
-    Fungsi ini dipanggil sekali di app.py agar:
-    - Tampilan aplikasi lebih konsisten (font, warna, layout)
-    - Sidebar, tombol, card, dan komponen lain punya style yang seragam
     """
     st.markdown(
         """
         <style>
-        /* Import Google Fonts: menggunakan font Inter untuk seluruh aplikasi */
+        /* Import Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         
-        /* Global Styles: semua elemen memakai font Inter */
+        /* Global Styles */
         * {
             font-family: 'Inter', sans-serif;
         }
         
-        /* Area utama konten (body) Streamlit */
+        /* Area utama konten */
         .main {
             background-color: #f8f9fa;
-            padding: 2rem;
+            padding: 0rem;
         }
         
-        /* Styling untuk sidebar (background merah gradasi) */
+        /* Styling untuk sidebar - warna solid tanpa gradasi */
         [data-testid="stSidebar"] {
-            background: linear-gradient(180deg, #8B0000 0%, #6B0000 100%);
-            padding-top: 2rem;
+            background: #7C1F1D;
+            padding-top: 0rem;
         }
         
-        /* Semua elemen di dalam sidebar diberi warna teks putih */
+        /* Semua elemen di dalam sidebar */
         [data-testid="stSidebar"] * {
             color: white !important;
         }
         
-        /* Container untuk logo di sidebar */
+        /* Container untuk logo */
         .logo-container {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
+            background-color: transparent;
+            padding: 2rem;
+            border: none;
+            shadow: none;
             border-radius: 12px;
             text-align: center;
             margin-bottom: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.2);
         }
         
-        /* Teks logo di sidebar */
-        .logo-text {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: white;
-            letter-spacing: 2px;
+        /* Sembunyikan navigation bar default */
+        [data-testid="stSidebarNav"] {
+            display: none;
+        }
+
+        /* Hapus margin atas pada elemen pertama di sidebar */
+        [data-testid="stSidebar"] > div:first-child {
+            margin-top: 0 !important;
         }
         
-        /* Label radio button di sidebar (judul menu) */
-        .stRadio > label {
-            font-size: 0.9rem;
-            font-weight: 500;
+        /* Custom Menu Container */
+        .custom-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0rem;
+            padding: 0rem 1rem;
+        }
+        
+        /* Styling untuk semua button menu di sidebar */
+        [data-testid="stSidebar"] .stButton > button {
+            background-color: transparent !important;
             color: white !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 0.75rem 1rem !important;
+            font-weight: 500 !important;
+            font-size: 1rem !important;
+            text-align: left !important;
+            justify-content: flex-start !important;
+            width: 100% !important;
+            transition: all 0.2s ease !important;
+            box-shadow: none !important;
+            margin: 0 !important;
+            border-left: 4px solid transparent !important;
         }
         
-        /* Jarak antar opsi radio di sidebar */
-        [data-testid="stSidebar"] .stRadio > div {
-            gap: 0.5rem;
+        /* Hover state untuk menu - sedikit lebih gelap */
+        [data-testid="stSidebar"] .stButton > button:hover {
+            background-color: rgba(0, 0, 0, 0.15) !important;
+            border-left: 4px solid rgba(255, 255, 255, 0.3) !important;
         }
         
-        /* Style untuk setiap label opsi radio (seperti card kecil) */
-        [data-testid="stSidebar"] .stRadio label {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        /* Active state untuk menu - border putih di kiri */
+        [data-testid="stSidebar"] button[kind="primary"] {
+            background-color: rgba(0, 0, 0, 0.2) !important;
+            font-weight: 600 !important;
+            border-left: 4px solid white !important;
         }
         
-        /* Efek hover pada label radio (sedikit terang + geser ke kanan) */
-        [data-testid="stSidebar"] .stRadio label:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
+        /* Active state hover */
+        [data-testid="stSidebar"] button[kind="primary"]:hover {
+            background-color: rgba(0, 0, 0, 0.25) !important;
         }
         
-        /* Card sambutan di halaman Home (putih dengan bayangan) */
+        /* Card sambutan di halaman Home */
         .welcome-card {
             background: white;
             padding: 2.5rem;
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border-left: 5px solid #8B0000;
+            border-left: 5px solid #7C1F1D;
             margin-bottom: 2rem;
         }
         
-        /* Judul besar di welcome card */
         .welcome-title {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #2c3e50;
             margin-bottom: 1rem;
         }
         
-        /* Paragraf di welcome card */
         .welcome-text {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #555;
             line-height: 1.8;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         
-        /* Card informasi dataset di Home (merah gradasi) */
+        /* Card informasi dataset */
         .info-card {
-            background: linear-gradient(135deg, #8B0000 0%, #c62828 100%);
+            background: #A62D2B;
             color: white;
             padding: 2rem;
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(139,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(124,31,29,0.3);
             height: 100%;
         }
         
-        /* Judul dalam info-card */
         .info-card h4 {
             color: white !important;
             font-weight: 600;
             margin-bottom: 1rem;
         }
         
-        /* List di dalam info-card dihilangkan bullet-nya */
         .info-card ul {
             list-style: none;
             padding: 0;
         }
         
-        /* Setiap item list di info-card diberi border bawah tipis */
         .info-card li {
             padding: 0.5rem 0;
             border-bottom: 1px solid rgba(255,255,255,0.2);
         }
         
-        /* Item terakhir list tanpa border bawah */
         .info-card li:last-child {
             border-bottom: none;
         }
         
-        /* Styling umum untuk semua tombol Streamlit */
+        /* Styling umum untuk tombol */
         .stButton > button {
-            background: linear-gradient(135deg, #c62828 0%, #8B0000 100%);
+            background: #A62D2B;
             color: white;
             border-radius: 10px;
             padding: 0.75rem 2rem;
@@ -151,32 +161,115 @@ def add_custom_css():
             font-weight: 600;
             font-size: 1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(198,40,40,0.3);
+            box-shadow: 0 4px 12px rgba(124,31,29,0.3);
             width: auto;
         }
         
-        /* Efek hover tombol (warna gradasi dibalik + sedikit naik) */
         .stButton > button:hover {
-            background: linear-gradient(135deg, #8B0000 0%, #c62828 100%);
+            background: #5d1715;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(198,40,40,0.4);
+            box-shadow: 0 6px 16px rgba(124,31,29,0.4);
         }
         
-        /* Angka utama di komponen st.metric (nilai besar) */
+        /* Tombol Previous (abu-abu) */
+        .nav-button-prev {
+            background: #6c757d !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 10px;
+            padding: 0.75rem 2rem !important;
+            font-weight: 600 !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+            white-space: nowrap !important;
+            text-align: center !important;
+            display: inline-block !important;
+            width: auto !important;
+            min-width: 120px !important;
+        }
+        
+        .nav-button-prev:hover {
+            background: #5a6268 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(108, 117, 125, 0.4);
+        }
+        
+        /* Tombol Next (merah) */
+        .nav-button-next {
+            background: #7C1F1D !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 10px;
+            padding: 0.75rem 2rem !important;
+            font-weight: 600 !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(124,31,29,0.3);
+            white-space: nowrap !important;
+            text-align: center !important;
+            display: inline-block !important;
+            width: auto !important;
+            min-width: 120px !important;
+        }
+        
+        .nav-button-next:hover {
+            background: #5d1715 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(124,31,29,0.4);
+        }
+        
+        /* Container alignment untuk button navigasi */
+        div[data-testid="column"]:last-of-type {
+            display: flex !important;
+            justify-content: flex-end !important;
+            align-items: center;
+            width: 100%;
+        }
+        
+        div[data-testid="column"]:last-of-type .stButton {
+            width: auto !important;
+            margin-left: auto !important;
+        }
+        
+        div[data-testid="column"]:last-of-type .stButton > button {
+            width: auto !important;
+            min-width: 120px;
+            margin-left: auto !important;
+        }
+        
+        div[data-testid="column"]:first-of-type {
+            display: flex !important;
+            justify-content: flex-start !important;
+            align-items: center;
+            width: 100%;
+        }
+        
+        div[data-testid="column"]:first-of-type .stButton {
+            width: auto !important;
+            margin-right: auto !important;
+        }
+        
+        div[data-testid="column"]:first-of-type .stButton > button {
+            width: auto !important;
+            min-width: 120px;
+            margin-right: auto !important;
+        }
+        
+        /* Metric styling */
         [data-testid="stMetricValue"] {
             font-size: 2rem;
             font-weight: 700;
-            color: #8B0000;
+            color: #7C1F1D;
         }
         
-        /* Label kecil di bawah/atas nilai metric */
         [data-testid="stMetricLabel"] {
             font-size: 0.9rem;
             color: #666;
             font-weight: 500;
         }
         
-        /* Card data umum (dipakai di banyak halaman) */
+        /* Data card */
         .data-card {
             background: white;
             padding: 1.5rem;
@@ -186,49 +279,60 @@ def add_custom_css():
             border: 1px solid #eee;
         }
         
-        /* Style umum untuk heading h1 (judul besar halaman) */
+        /* Headings */
         h1 {
             color: #2c3e50;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 1.5rem;
+            font-size: 1.5rem;
         }
         
-        /* Style untuk heading h2 dan h3 (subjudul) */
         h2, h3 {
             color: #34495e;
             font-weight: 600;
         }
         
-        /* Area upload file (st.file_uploader) diberi border dashed */
+        /* File uploader */
         [data-testid="stFileUploader"] {
             background: white;
             padding: 2rem;
             border-radius: 12px;
-            border: 2px dashed #8B0000;
+            border: 2px dashed #7C1F1D;
         }
         
-        /* Tabs container: beri jarak antar tab */
+        /* Tabs styling */
         .stTabs [data-baseweb="tab-list"] {
             gap: 1rem;
         }
         
-        /* Style setiap tab (seperti pill putih dengan border) */
         .stTabs [data-baseweb="tab"] {
             background-color: white;
             border-radius: 8px;
             padding: 0.75rem 1.5rem;
             border: 2px solid #eee;
             font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .stTabs [data-baseweb="tab"]:hover {
+            background-color: #f5f5f5;
+            border-color: #7C1F1D;
         }
         
-        /* Tab yang aktif diberi background merah dan teks putih */
         .stTabs [aria-selected="true"] {
-            background-color: #8B0000;
+            background-color: #7C1F1D;
             color: white;
-            border-color: #8B0000;
+            border-color: #7C1F1D;
+            box-shadow: 0 4px 12px rgba(124, 31, 29, 0.3);
+        }
+
+        .stTabs [aria-selected="true"]:hover {
+            background-color: #5d1715;
+            border-color: #5d1715;
+            box-shadow: 0 6px 16px rgba(124, 31, 29, 0.4);
         }
         
-        /* Form (st.form) dibuat seperti card putih dengan bayangan */
+        /* Form styling */
         .stForm {
             background: white;
             padding: 2rem;
@@ -236,45 +340,53 @@ def add_custom_css():
             box-shadow: 0 2px 12px rgba(0,0,0,0.06);
         }
         
-        /* Style untuk pesan success (st.success) */
+        /* Alert messages */
         .stSuccess {
             background-color: #d4edda;
             border-left: 4px solid #28a745;
             border-radius: 8px;
         }
         
-        /* Style untuk pesan error (st.error) */
         .stError {
             background-color: #f8d7da;
             border-left: 4px solid #dc3545;
             border-radius: 8px;
         }
         
-        /* Style untuk pesan warning (st.warning) */
         .stWarning {
             background-color: #fff3cd;
             border-left: 4px solid #ffc107;
             border-radius: 8px;
         }
         
-        /* Style untuk pesan info (st.info) */
         .stInfo {
             background-color: #d1ecf1;
             border-left: 4px solid #17a2b8;
             border-radius: 8px;
         }
         
-        /* Header expander (komponen collapsible) dibuat seperti card putih */
+        /* Expander */
         .streamlit-expanderHeader {
             background-color: white;
             border-radius: 8px;
             font-weight: 600;
         }
         
-        /* DataFrame (tabel) dibuat dengan sudut membulat dan overflow tersembunyi */
+        /* DataFrame */
         [data-testid="stDataFrame"] {
             border-radius: 8px;
             overflow: hidden;
+        }
+
+        /* Image and chart borders */
+        [data-testid="stImage"],
+        .stPlotlyChart,
+        .streamlit-expanderContent > div > div:first-child > div:nth-child(2) {
+            border: 1px solid #7C1F1D; 
+            border-radius: 8px; 
+            padding: 15px; 
+            background-color: transparent; 
+            margin-bottom: 2rem;
         }
         </style>
         """,

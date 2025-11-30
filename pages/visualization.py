@@ -16,7 +16,7 @@ from helpers import (
 
 def show_visualization():
     # Judul halaman utama
-    st.title("📊 Visualisasi & Eksplorasi Data")
+    st.title("Visualisasi Data")
 
     # Pastikan data hasil preprocessing sudah ada di session_state
     require_clean_data()
@@ -211,3 +211,56 @@ def show_visualization():
                 mime="application/pdf",
                 use_container_width=False,
             )
+    
+    st.markdown("---")
+    
+    # Tombol Previous di ujung kiri dan Next di ujung kanan, sejajar dengan konten
+    # Menggunakan rasio kolom yang sama dengan Preprocessing.py (3:6:3)
+    col_prev, col_spacer, col_next = st.columns([3, 6, 3], gap="large") 
+    
+    # Tombol Previous (Abu-abu)
+    with col_prev:
+        # Tambahkan class nav-button-prev via JavaScript (disediakan di akhir file ini)
+        if st.button("< Previous", key="goto_analysis_prev", use_container_width=False):
+            st.session_state["page"] = "Analisis Data" # Kembali ke halaman sebelumnya
+            st.rerun()
+            
+    with col_spacer:
+        st.empty() # Spacer kosong
+        
+    # Tombol Next (Merah)
+    with col_next:
+        # Tombol Next untuk berpindah ke halaman Prediction
+        if st.button("Next >", key="goto_prediction_next", use_container_width=False):
+            st.session_state["page"] = "Prediction" # Lanjut ke halaman berikutnya
+            st.rerun()
+
+    # Inject JavaScript untuk menambahkan class CSS ke tombol setelah di-render
+    # (Ini diambil dari pages/preprocessing.py)
+    st.markdown("""
+    <script>
+    function styleNavButtons() {
+        const buttons = document.querySelectorAll('.stButton > button');
+        buttons.forEach(button => {
+            const text = button.textContent.trim();
+            // Menambahkan kelas CSS berdasarkan teks tombol
+            if (text.includes('Previous')) {
+                button.classList.add('nav-button-prev');
+                button.style.whiteSpace = 'nowrap';
+                button.style.textAlign = 'center';
+            } else if (text.includes('Next')) {
+                button.classList.add('nav-button-next');
+                button.style.whiteSpace = 'nowrap';
+                button.style.textAlign = 'center';
+            } else if (text.includes('Prediction')) { /* Tambahan untuk tombol 'Prediction' */
+                button.classList.add('nav-button-next');
+                button.style.whiteSpace = 'nowrap';
+                button.style.textAlign = 'center';
+            }
+        });
+    }
+    // Jalankan setelah DOM siap dan setelah Streamlit merender ulang
+    setTimeout(styleNavButtons, 100);
+    setTimeout(styleNavButtons, 500);
+    </script>
+    """, unsafe_allow_html=True)

@@ -3,7 +3,7 @@ import streamlit as st
 # Fungsi utama untuk menampilkan halaman Home
 def show_home():
     # Judul utama di tengah halaman (menggunakan HTML untuk styling)
-    st.markdown("<h1 style='text-align: center;'>❤️ Selamat Datang!</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Selamat Datang!</h1>", unsafe_allow_html=True)
     
     # Membuat layout 2 kolom: kiri lebih lebar (2 bagian) daripada kanan (1 bagian)
     col1, col2 = st.columns([2, 1], gap="large")
@@ -38,7 +38,7 @@ def show_home():
 
         # Tombol untuk memulai alur aplikasi
         # Saat diklik, halaman akan berpindah ke "Upload Dataset"
-        if st.button("🚀 Mulai Sekarang", use_container_width=False):
+        if st.button("Mulai Sekarang", use_container_width=False):
             # Mengubah nilai halaman aktif di session_state
             st.session_state["page"] = "Upload Dataset"
             # Melakukan rerun app agar perubahan halaman langsung diterapkan

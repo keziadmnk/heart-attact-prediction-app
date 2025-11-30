@@ -4,7 +4,7 @@ import pandas as pd
 # Fungsi utama halaman "Upload Dataset"
 def show_upload_dataset():
     # Judul halaman
-    st.title("📂 Upload Dataset")
+    st.title("Upload Dataset")
     
     # Card penjelasan singkat tentang apa yang harus dilakukan user di halaman ini
     st.markdown(
@@ -72,7 +72,7 @@ def show_upload_dataset():
             st.dataframe(col_info, use_container_width=True)
 
             # Tombol untuk langsung pindah ke halaman preprocessing
-            if st.button("➡️ Lanjut ke Preprocessing", use_container_width=False):
+            if st.button("Next >", use_container_width=False):
                 st.session_state["page"] = "Preprocessing Data"  # update halaman aktif
                 st.rerun()  # refresh app agar router di app.py mengarahkan ke halaman berikutnya
                 
